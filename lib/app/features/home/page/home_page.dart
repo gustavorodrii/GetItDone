@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_heatmap_calendar/flutter_heatmap_calendar.dart';
 import 'package:get/get.dart';
 import 'package:getitdone/app/features/home/controller/home_controller.dart';
 import 'package:getitdone/app/features/home/page/list_item.dart';
@@ -6,6 +7,7 @@ import 'package:lottie/lottie.dart';
 import '../../../models/todo_model.dart';
 import '../../../service/notification_service.dart';
 import '../../../shared/components/input_textfield.dart';
+import '../../../utils/utils_colors.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -36,24 +38,52 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
-                                'Olá, ',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'Olá, ',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    controller.userProvider.userName.value,
+                                    style: const TextStyle(
+                                      fontSize: 26,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Text(
-                                controller.userProvider.userName.value,
-                                style: const TextStyle(
-                                  fontSize: 26,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
+                              Switch(
+                                trackOutlineColor:
+                                    const WidgetStatePropertyAll<Color?>(
+                                  Colors.grey,
                                 ),
+                                inactiveThumbColor: Colors.grey,
+                                trackColor:
+                                    const WidgetStatePropertyAll<Color?>(
+                                  Colors.white,
+                                ),
+                                thumbColor:
+                                    const WidgetStatePropertyAll<Color?>(
+                                  Colors.blue,
+                                ),
+                                thumbIcon: const WidgetStatePropertyAll<Icon?>(
+                                  Icon(
+                                    Icons.calendar_month,
+                                  ),
+                                ),
+                                value: controller.isCalendarShown.value,
+                                onChanged: (value) =>
+                                    controller.toggleCalendarShown(),
                               ),
                             ],
                           ),
@@ -104,9 +134,46 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    GetBuilder<HomeController>(builder: (controller) {
+                      Map<DateTime, int> completedTasks =
+                          controller.getCompletedTasksByDate(controller.todos);
+                      return Visibility(
+                        visible: controller.isCalendarShown.value,
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          color: Colors.white,
+                          child: HeatMapCalendar(
+                            datasets: completedTasks,
+                            colorMode: ColorMode.color,
+                            defaultColor: Colors.grey[300]!,
+                            textColor: Colors.black,
+                            colorsets: UtilsColors.heatMapColorSets,
+                            monthFontSize: 14,
+                            weekFontSize: 14,
+                            showColorTip: false,
+                          ),
+                        ),
+                      );
+                    }),
                     Obx(
                       () => controller.isLoading.value
-                          ? const Center(child: CircularProgressIndicator())
+                          ? const Center(
+                              child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: Column(
+                                children: [
+                                  CircularProgressIndicator(),
+                                  Text(
+                                    'Estamos carregando os seus dados, aguarde um instante por favor!',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ))
                           : GetBuilder<HomeController>(builder: (controller) {
                               return controller.todos.isEmpty
                                   ? Center(

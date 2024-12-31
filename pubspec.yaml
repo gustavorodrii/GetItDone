@@ -43,6 +43,7 @@ dependencies:
   intl: ^0.20.1
   flutter_local_notifications: ^18.0.1
   lottie: ^3.3.0
+  flutter_heatmap_calendar: ^1.0.5
 
 dev_dependencies:
   flutter_test:

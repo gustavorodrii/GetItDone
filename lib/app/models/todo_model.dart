@@ -5,6 +5,7 @@ class TodoModel {
   bool completed;
   final DateTime? reminder;
   final DateTime? createdAt;
+  final DateTime? completedDate;
 
   TodoModel({
     this.id,
@@ -13,6 +14,7 @@ class TodoModel {
     required this.completed,
     required this.reminder,
     this.createdAt,
+    this.completedDate,
   });
 
   factory TodoModel.fromJson(Map<String, dynamic> json) {
@@ -26,6 +28,9 @@ class TodoModel {
       createdAt: json['createdAt'] != null
           ? DateTime.parse(json['createdAt'])
           : DateTime.now(),
+      completedDate: json['completedDate'] != null
+          ? DateTime.parse(json['completedDate'])
+          : DateTime.now(),
     );
   }
 
@@ -37,6 +42,7 @@ class TodoModel {
       'completed': completed,
       'reminder': reminder?.toIso8601String(),
       'createdAt': createdAt?.toIso8601String(),
+      'completedDate': completedDate?.toIso8601String(),
     };
   }
 }

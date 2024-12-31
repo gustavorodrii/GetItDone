@@ -16,6 +16,7 @@ class HomeController extends GetxController {
   var selectedDate = Rx<DateTime?>(null);
   var selectedTime = Rx<TimeOfDay?>(null);
   Rx<bool> reminderSelected = false.obs;
+  Rx<bool> isCalendarShown = false.obs;
 
   void clearControllers() {
     taskNameController.clear();
@@ -23,6 +24,11 @@ class HomeController extends GetxController {
     selectedDate.value = null;
     selectedTime.value = null;
     reminderSelected.value = false;
+  }
+
+  void toggleCalendarShown() {
+    isCalendarShown.value = !isCalendarShown.value;
+    update();
   }
 
   @override
@@ -79,6 +85,7 @@ class HomeController extends GetxController {
         Get.snackbar('Sucesso', 'Você marcou como feita a tarefa',
             colorText: Colors.white, backgroundColor: Colors.green);
         fetchTodos();
+        getCompletedTasksByDate(todos);
         update();
       },
       (error) {
@@ -101,5 +108,27 @@ class HomeController extends GetxController {
     update();
     Get.snackbar('Sucesso', 'Você excluiu a tarefa',
         colorText: Colors.white, backgroundColor: Colors.green);
+  }
+
+  Map<DateTime, int> getCompletedTasksByDate(List<TodoModel> todos) {
+    Map<DateTime, int> completedTasks = {};
+
+    for (var todo in todos) {
+      if (todo.completed && todo.reminder != null) {
+        DateTime date = DateTime(
+          todo.reminder!.year,
+          todo.reminder!.month,
+          todo.reminder!.day,
+        );
+
+        if (completedTasks.containsKey(date)) {
+          completedTasks[date] = completedTasks[date]! + 1;
+        } else {
+          completedTasks[date] = 1;
+        }
+      }
+    }
+
+    return completedTasks;
   }
 }

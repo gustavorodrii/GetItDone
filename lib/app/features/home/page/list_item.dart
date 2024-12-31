@@ -35,7 +35,7 @@ class _ListItemState extends State<ListItem> {
         padding: const EdgeInsets.all(1),
         decoration: BoxDecoration(
           color: Colors.blue[200],
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Slidable(
           key: const ValueKey(0),
