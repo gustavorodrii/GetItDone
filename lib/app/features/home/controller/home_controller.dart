@@ -8,6 +8,7 @@ class HomeController extends GetxController {
   final HomeRepository repository;
   final UserProvider userProvider;
   final List<TodoModel> todos = [];
+  final List<TodoModel> completedTodos = [];
   final isLoading = false.obs;
   HomeController({required this.repository, required this.userProvider});
 
@@ -45,13 +46,16 @@ class HomeController extends GetxController {
       (sucess) {
         todos.clear();
         todos.addAll(sucess);
+        completedTodos.addAll(sucess.where((e) => e.completed == true));
         todos.sort(
             (a, b) => a.completed == b.completed ? 0 : (a.completed ? 1 : -1));
 
         isLoading.value = false;
         update();
       },
-      (error) {},
+      (error) {
+        // fetchTodos();
+      },
     );
   }
 
@@ -114,11 +118,11 @@ class HomeController extends GetxController {
     Map<DateTime, int> completedTasks = {};
 
     for (var todo in todos) {
-      if (todo.completed && todo.reminder != null) {
+      if (todo.completed && todo.completedDate != null) {
         DateTime date = DateTime(
-          todo.reminder!.year,
-          todo.reminder!.month,
-          todo.reminder!.day,
+          todo.completedDate!.year,
+          todo.completedDate!.month,
+          todo.completedDate!.day,
         );
 
         if (completedTasks.containsKey(date)) {

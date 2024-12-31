@@ -13,10 +13,7 @@ class UserProvider extends GetxController {
   Future<void> loadUser() async {
     final prefs = await SharedPreferences.getInstance();
     final userData = prefs.getString('userName');
-    if (userData == null) {
-      await resetUser();
-    }
-    userName.value = userData!;
+    userName.value = userData ?? "";
     update();
   }
 
