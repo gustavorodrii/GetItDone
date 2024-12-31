@@ -5,7 +5,7 @@ class TodoModel {
   bool completed;
   final DateTime? reminder;
   final DateTime? createdAt;
-  final DateTime? completedDate;
+  DateTime? completedDate;
 
   TodoModel({
     this.id,

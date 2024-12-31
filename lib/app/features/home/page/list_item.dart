@@ -21,6 +21,7 @@ class _ListItemState extends State<ListItem> {
   void checkItem(BuildContext context) {
     setState(() {
       widget.todo.completed = !widget.todo.completed;
+      widget.todo.completedDate = DateTime.now();
     });
     widget.controller.updateTodo(
       widget.todo,
