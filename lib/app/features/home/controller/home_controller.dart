@@ -54,7 +54,7 @@ class HomeController extends GetxController {
         update();
       },
       (error) {
-        // fetchTodos();
+        fetchTodos();
       },
     );
   }
