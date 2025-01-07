@@ -142,15 +142,31 @@ class _HomePageState extends State<HomePage> {
                         child: Container(
                           padding: const EdgeInsets.all(8),
                           color: Colors.white,
-                          child: HeatMapCalendar(
-                            datasets: completedTasks,
-                            colorMode: ColorMode.color,
-                            defaultColor: Colors.grey[300]!,
-                            textColor: Colors.black,
-                            colorsets: UtilsColors.heatMapColorSets,
-                            monthFontSize: 14,
-                            weekFontSize: 14,
-                            showColorTip: false,
+                          child: Column(
+                            children: [
+                              HeatMapCalendar(
+                                datasets: completedTasks,
+                                colorMode: ColorMode.color,
+                                defaultColor: Colors.grey[300]!,
+                                textColor: Colors.black,
+                                colorsets: UtilsColors.heatMapColorSets,
+                                monthFontSize: 14,
+                                weekFontSize: 14,
+                                showColorTip: false,
+                                onClick: (date) {
+                                  controller.filterTodosByDate(date);
+                                },
+                              ),
+                              TextButton(
+                                onPressed: () => controller.clearFilter(),
+                                child: const Text(
+                                  'Limpar filtro',
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       );
@@ -203,10 +219,16 @@ class _HomePageState extends State<HomePage> {
                                         padding: const EdgeInsets.only(
                                             top: 10, bottom: 20),
                                         shrinkWrap: true,
-                                        itemCount: controller.todos.length,
+                                        itemCount: controller
+                                                .filteredTodos.isNotEmpty
+                                            ? controller.filteredTodos.length
+                                            : controller.todos.length,
                                         itemBuilder: (context, index) {
-                                          TodoModel todo =
-                                              controller.todos[index];
+                                          final todo = controller
+                                                  .filteredTodos.isNotEmpty
+                                              ? controller.filteredTodos[index]
+                                              : controller.todos[index];
+
                                           return ListItem(
                                             todo: todo,
                                             controller: controller,

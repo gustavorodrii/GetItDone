@@ -8,6 +8,7 @@ class HomeController extends GetxController {
   final HomeRepository repository;
   final UserProvider userProvider;
   final List<TodoModel> todos = [];
+  final filteredTodos = <TodoModel>[].obs;
   final List<TodoModel> completedTodos = [];
   final isLoading = false.obs;
   HomeController({required this.repository, required this.userProvider});
@@ -29,6 +30,7 @@ class HomeController extends GetxController {
 
   void toggleCalendarShown() {
     isCalendarShown.value = !isCalendarShown.value;
+    clearFilter();
     update();
   }
 
@@ -134,5 +136,27 @@ class HomeController extends GetxController {
     }
 
     return completedTasks;
+  }
+
+  void filterTodosByDate(DateTime date) {
+    filteredTodos.value = todos.where((todo) {
+      if (todo.createdAt == null) return false;
+
+      final todoDate = DateTime(
+        todo.createdAt!.year,
+        todo.createdAt!.month,
+        todo.createdAt!.day,
+      );
+      final filterDate = DateTime(date.year, date.month, date.day);
+
+      return todoDate == filterDate;
+    }).toList();
+
+    update();
+  }
+
+  void clearFilter() {
+    filteredTodos.clear();
+    update();
   }
 }

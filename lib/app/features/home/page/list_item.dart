@@ -34,7 +34,7 @@ class _ListItemState extends State<ListItem> {
       child: Container(
         padding: const EdgeInsets.all(1),
         decoration: BoxDecoration(
-          color: Colors.blue[200],
+          color: Colors.grey[200],
           borderRadius: BorderRadius.circular(20),
         ),
         child: Slidable(
@@ -70,11 +70,14 @@ class _ListItemState extends State<ListItem> {
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
               overflow: TextOverflow.ellipsis,
             ),
-            subtitle: Text(
-              widget.todo.description ?? "",
-              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
-              overflow: TextOverflow.ellipsis,
-            ),
+            subtitle: widget.todo.description!.isEmpty
+                ? null
+                : Text(
+                    widget.todo.description ?? "",
+                    style: const TextStyle(
+                        fontSize: 12, fontWeight: FontWeight.w400),
+                    overflow: TextOverflow.ellipsis,
+                  ),
             trailing: widget.todo.reminder != null
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
