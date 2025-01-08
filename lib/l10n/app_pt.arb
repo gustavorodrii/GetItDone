@@ -1,0 +1,72 @@
+{
+  "@@locale": "pt",
+  "language": "Portuguese",
+  "@language": {
+    "description": "Brasil aqui teste"
+  },
+  "helloWorld": "Hello World!",
+  "@helloWorld": {
+    "description": "Saudações de um programador"
+  },
+  "multiLanguage": "Multi Language",
+  "@multiLanguage": {
+    "description": "Título do app"
+  },
+  "greeting": "Olá, ",
+  "@greeting": {
+    "description": "Saudação inicial ao usuário"
+  },
+  "userName": "Nome do usuário",
+  "@userName": {
+    "description": "Nome do usuário exibido na tela inicial"
+  },
+  "newTask": "Crie uma nova tarefa\npara organizar suas atividades",
+  "@newTask": {
+    "description": "Mensagem exibida quando o usuário não tem tarefas"
+  },
+  "addTask": "Criar tarefa",
+  "@addTask": {
+    "description": "Texto do botão para criar uma nova tarefa"
+  },
+  "calendar": "Limpar filtro",
+  "@calendar": {
+    "description": "Texto do botão para limpar o filtro do calendário"
+  },
+  "noTasks": "Que tal começar a criar as suas tarefas e manter a sua vida organizada?",
+  "@noTasks": {
+    "description": "Mensagem exibida quando não há tarefas para mostrar"
+  },
+  "loadingData": "Estamos carregando os seus dados, aguarde um instante por favor!",
+  "@loadingData": {
+    "description": "Mensagem exibida enquanto os dados estão sendo carregados"
+  },
+   "taskTitle": "Nome da tarefa",
+  "@loadingData": {
+    "description": "Mensagem exibida em Nome da tarefa"
+  },
+   "taskDescription": "Descrição da tarefa",
+  "@loadingData": {
+    "description": "Mensagem exibida em Descrição da tarefa"
+  },
+   "taskNotification": "Deseja receber notificação?",
+  "@loadingData": {
+    "description": "Mensagem exibida quando Deseja receber notificação?"
+  },
+   "taskData": "Data",
+  "@loadingData": {
+    "description": "Mensagem exibida nas notificaçoes"
+  },
+   "taskTime": "Hora",
+  "@loadingData": {
+    "description": "Mensagem exibida nas notificaçoes"
+  },
+  "completedTasksHeader": "Você tem {todoLength}",
+  "taskCompletedText": "tarefas concluídas, {userName}!",
+  "noTasksText": "Você ainda não concluiu nenhuma tarefa.",
+  "calendarPrompt": "Organize sua rotina e mantenha suas tarefas em dia.",
+  "clearFilterButton": "Limpar filtro",
+  "loadingDataMessage": "Estamos carregando seus dados, aguarde um instante por favor!",
+  "deleteAllTasksButton": "Deletar todas as tarefas",
+  "home": "Tarefas",
+  "done": "Concluídas"
+}

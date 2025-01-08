@@ -19,9 +19,9 @@ class _WelcomePageState extends State<WelcomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('Seja bem-vindo ${widget.argumentData}'),
-            Text('Aproveite o app'),
+            const Text('Aproveite o app'),
             ElevatedButton(
-              onPressed: () => Get.offAllNamed('/home'),
+              onPressed: () => Get.offAllNamed('/mainNavigation'),
               child: const Text('Me leve para o app'),
             ),
           ],

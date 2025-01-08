@@ -88,9 +88,10 @@ class HomeController extends GetxController {
       (sucess) {
         final index = todos.indexWhere((element) => element.id == sucess.id);
         todos[index] = sucess;
+        completedTodos.clear();
+        completedTodos.addAll(todos.where((todo) => todo.completed));
         Get.snackbar('Sucesso', 'Você marcou como feita a tarefa',
             colorText: Colors.white, backgroundColor: Colors.green);
-        fetchTodos();
         getCompletedTasksByDate(todos);
         update();
       },
@@ -111,6 +112,9 @@ class HomeController extends GetxController {
     }
 
     todos.removeWhere((todo) => todo.id == id);
+    completedTodos.removeWhere(
+      (todoCompleted) => todoCompleted.id == id,
+    );
     update();
     Get.snackbar('Sucesso', 'Você excluiu a tarefa',
         colorText: Colors.white, backgroundColor: Colors.green);
@@ -158,5 +162,31 @@ class HomeController extends GetxController {
   void clearFilter() {
     filteredTodos.clear();
     update();
+  }
+
+  void deleteAllTodos() async {
+    isLoading.value = true;
+
+    var todosToDelete = List<TodoModel>.from(completedTodos);
+
+    for (var todo in todosToDelete) {
+      final result = await repository.delete(todo.id!);
+      if (!result) {
+        Get.snackbar('Erro', 'Não foi possível deletar a tarefa',
+            colorText: Get.theme.snackBarTheme.actionTextColor,
+            backgroundColor: Get.theme.snackBarTheme.backgroundColor);
+      } else {
+        todos.removeWhere((completedTodo) => completedTodo.id == todo.id);
+        completedTodos.removeWhere(
+          (todoCompleted) => todoCompleted.id == todo.id,
+        );
+      }
+    }
+
+    isLoading.value = false;
+    update();
+
+    Get.snackbar('Sucesso', 'Você excluiu as tarefas concluídas',
+        colorText: Colors.white, backgroundColor: Colors.green);
   }
 }

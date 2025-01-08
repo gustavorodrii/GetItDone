@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:getitdone/app/initialize/application.dart';
 import 'package:getitdone/app/injections/injector.dart';
+// ignore: depend_on_referenced_packages
 import 'package:timezone/data/latest.dart' as tz;
 import '../service/notification_service.dart';
 

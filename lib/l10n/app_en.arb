@@ -1,0 +1,74 @@
+{
+  "@@locale": "en",
+  "language": "English",
+  "@language": {
+    "description": "Test here in the USA"
+  },
+  "helloWorld": "Hello World!",
+  "@helloWorld": {
+    "description": "Greetings from a programmer"
+  },
+  "multiLanguage": "Multi Language",
+  "@multiLanguage": {
+    "description": "App title"
+  },
+  "greeting": "Hello, ",
+  "@greeting": {
+    "description": "Initial greeting to the user"
+  },
+  "userName": "User's name",
+  "@userName": {
+    "description": "User's name displayed on the home screen"
+  },
+  "newTask": "Create a new task\nto organize your activities",
+  "@newTask": {
+    "description": "Message displayed when the user has no tasks"
+  },
+  "addTask": "Create task",
+  "@addTask": {
+    "description": "Button text to create a new task"
+  },
+  "calendar": "Clear filter",
+  "@calendar": {
+    "description": "Button text to clear the calendar filter"
+  },
+  "noTasks": "How about starting to create your tasks and keeping your life organized?",
+  "@noTasks": {
+    "description": "Message displayed when there are no tasks to show"
+  },
+  "loadingData": "We are loading your data, please wait a moment!",
+  "@loadingData": {
+    "description": "Message displayed while the data is being loaded"
+  },
+  
+  "taskTitle": "Task name",
+  "@loadingData": {
+    "description": "Message displayed in Task name"
+  },
+  "taskDescription": "Task description",
+  "@loadingData": {
+    "description": "Message displayed in Task description"
+  },
+  "taskNotification": "Do you want to receive notifications?",
+  "@loadingData": {
+    "description": "Message displayed when Do you want to receive notifications?"
+  },
+  "taskData": "Date",
+  "@loadingData": {
+    "description": "Message displayed in notifications"
+  },
+  "taskTime": "Time",
+  "@loadingData": {
+    "description": "Message displayed in notifications"
+  },
+  "completedTasksHeader": "You have {todoLength}",
+  "taskCompletedText": "completed tasks, {userName}!",
+  "noTasksText": "You haven't completed any tasks yet.",
+  "calendarPrompt": "Organize your routine and keep your tasks up to date.",
+  "clearFilterButton": "Clear filter",
+  "loadingDataMessage": "We are loading your data, please wait a moment!",
+  "deleteAllTasksButton": "Delete all tasks",
+  "home": "Home",
+  "done": "Done"
+}
+

@@ -30,18 +30,17 @@ class DioService {
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
-          // Adicione cabeçalhos ou autenticação, se necessário
           print('Requisição: ${options.method} ${options.uri} ${options.data}');
-          return handler.next(options); // Continue com a requisição
+          return handler.next(options);
         },
         onResponse: (response, handler) {
           print('Resposta: ${response.statusCode} ${response.data}');
-          return handler.next(response); // Continue com a resposta
+          return handler.next(response);
         },
-        onError: (DioError e, handler) {
+        onError: (DioException e, handler) {
           print(
               'Erro: ${e.response?.statusCode} ${e.message} ${e.response?.data} ${e.response?.statusMessage}');
-          return handler.next(e); // Continue com o erro
+          return handler.next(e);
         },
       ),
     );

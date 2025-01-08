@@ -3,6 +3,7 @@ import 'package:flutter_heatmap_calendar/flutter_heatmap_calendar.dart';
 import 'package:get/get.dart';
 import 'package:getitdone/app/features/home/controller/home_controller.dart';
 import 'package:getitdone/app/features/home/page/list_item.dart';
+import 'package:getitdone/extensions/context_extension.dart';
 import 'package:lottie/lottie.dart';
 import '../../../models/todo_model.dart';
 import '../../../service/notification_service.dart';
@@ -10,7 +11,8 @@ import '../../../shared/components/input_textfield.dart';
 import '../../../utils/utils_colors.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final Locale selectedLocal;
+  const HomePage({super.key, required this.selectedLocal});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -18,231 +20,114 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final HomeController controller = Get.find<HomeController>();
+  //  GeneralStream.setLanguage(Locale('pt', 'BR'));
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blue,
-      body: Stack(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: 220,
-                color: Colors.blue,
-                child: SafeArea(
-                  bottom: false,
-                  child: Obx(() {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    'Olá, ',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    controller.userProvider.userName.value,
-                                    style: const TextStyle(
-                                      fontSize: 26,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Switch(
-                                trackOutlineColor:
-                                    const WidgetStatePropertyAll<Color?>(
-                                  Colors.grey,
-                                ),
-                                inactiveThumbColor: Colors.grey,
-                                trackColor:
-                                    const WidgetStatePropertyAll<Color?>(
-                                  Colors.white,
-                                ),
-                                thumbColor:
-                                    const WidgetStatePropertyAll<Color?>(
-                                  Colors.blue,
-                                ),
-                                thumbIcon: const WidgetStatePropertyAll<Icon?>(
-                                  Icon(
-                                    Icons.calendar_month,
-                                  ),
-                                ),
-                                value: controller.isCalendarShown.value,
-                                onChanged: (value) =>
-                                    controller.toggleCalendarShown(),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            padding: const EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              color: Colors.blue,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  'Crie uma nova tarefa\npara organizar suas atividades',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                CircleAvatar(
-                                  backgroundColor: Colors.white,
-                                  child: IconButton(
-                                    onPressed: () => createNewTask(context),
-                                    icon: const Icon(Icons.add),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    );
-                  }),
-                ),
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height - 220,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
+          Container(
+            height: MediaQuery.of(context).size.height / 4,
+            color: Colors.blue,
+            child: SafeArea(
+              bottom: false,
+              child: Obx(() {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    GetBuilder<HomeController>(builder: (controller) {
-                      Map<DateTime, int> completedTasks =
-                          controller.getCompletedTasksByDate(controller.todos);
-                      return Visibility(
-                        visible: controller.isCalendarShown.value,
-                        child: Container(
-                          padding: const EdgeInsets.all(8),
-                          color: Colors.white,
-                          child: Column(
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              HeatMapCalendar(
-                                datasets: completedTasks,
-                                colorMode: ColorMode.color,
-                                defaultColor: Colors.grey[300]!,
-                                textColor: Colors.black,
-                                colorsets: UtilsColors.heatMapColorSets,
-                                monthFontSize: 14,
-                                weekFontSize: 14,
-                                showColorTip: false,
-                                onClick: (date) {
-                                  controller.filterTodosByDate(date);
-                                },
+                              Text(
+                                context.localizations.greeting,
+                                style: const TextStyle(
+                                  height: 0,
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                              TextButton(
-                                onPressed: () => controller.clearFilter(),
-                                child: const Text(
-                                  'Limpar filtro',
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                  ),
+                              Text(
+                                '${controller.userProvider.userName.value}.',
+                                style: const TextStyle(
+                                  height: 0,
+                                  fontSize: 26,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ],
                           ),
-                        ),
-                      );
-                    }),
-                    Obx(
-                      () => controller.isLoading.value
-                          ? const Center(
-                              child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 20),
-                              child: Column(
-                                children: [
-                                  CircularProgressIndicator(),
-                                  Text(
-                                    'Estamos carregando os seus dados, aguarde um instante por favor!',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 18,
+                          controller.todos.isEmpty
+                              ? const SizedBox.shrink()
+                              : Switch(
+                                  trackOutlineColor:
+                                      const WidgetStatePropertyAll<Color?>(
+                                    Colors.grey,
+                                  ),
+                                  inactiveThumbColor: Colors.grey,
+                                  trackColor:
+                                      const WidgetStatePropertyAll<Color?>(
+                                    Colors.white,
+                                  ),
+                                  thumbColor:
+                                      const WidgetStatePropertyAll<Color?>(
+                                    Colors.blue,
+                                  ),
+                                  thumbIcon:
+                                      const WidgetStatePropertyAll<Icon?>(
+                                    Icon(
+                                      Icons.calendar_month,
                                     ),
                                   ),
-                                ],
+                                  value: controller.isCalendarShown.value,
+                                  onChanged: (value) =>
+                                      controller.toggleCalendarShown(),
+                                ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              context.localizations.newTask,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
                               ),
-                            ))
-                          : GetBuilder<HomeController>(builder: (controller) {
-                              return controller.todos.isEmpty
-                                  ? Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 20),
-                                        child: Column(
-                                          children: [
-                                            const Text(
-                                              'Que tal começar a criar as suas tarefas e manter a sua vida organizada ?',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 18,
-                                              ),
-                                            ),
-                                            Lottie.asset(
-                                              height: 300,
-                                              'assets/lottie/empty_list.json',
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  : Expanded(
-                                      child: ListView.builder(
-                                        padding: const EdgeInsets.only(
-                                            top: 10, bottom: 20),
-                                        shrinkWrap: true,
-                                        itemCount: controller
-                                                .filteredTodos.isNotEmpty
-                                            ? controller.filteredTodos.length
-                                            : controller.todos.length,
-                                        itemBuilder: (context, index) {
-                                          final todo = controller
-                                                  .filteredTodos.isNotEmpty
-                                              ? controller.filteredTodos[index]
-                                              : controller.todos[index];
-
-                                          return ListItem(
-                                            todo: todo,
-                                            controller: controller,
-                                          );
-                                        },
-                                      ),
-                                    );
-                            }),
+                            ),
+                            CircleAvatar(
+                              backgroundColor: Colors.white,
+                              child: IconButton(
+                                onPressed: () => createNewTask(context),
+                                icon: const Icon(Icons.add),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
-                ),
-              ),
-            ],
+                );
+              }),
+            ),
           ),
+          ListViewAndCalendar(controller: controller),
         ],
       ),
     );
@@ -267,12 +152,12 @@ class _HomePageState extends State<HomePage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   InputTextfield(
-                    labelText: 'Nome da tarefa',
+                    labelText: context.localizations.taskTitle,
                     controller: controller.taskNameController,
                     icon: Icons.task,
                   ),
                   InputTextfield(
-                    labelText: 'Descrição da tarefa',
+                    labelText: context.localizations.taskDescription,
                     controller: controller.taskDescriptionController,
                     icon: Icons.description,
                   ),
@@ -286,7 +171,7 @@ class _HomePageState extends State<HomePage> {
                           },
                         );
                       }),
-                      const Text('Deseja receber notificação?'),
+                      Text(context.localizations.taskNotification),
                     ],
                   ),
                   Obx(() {
@@ -297,7 +182,7 @@ class _HomePageState extends State<HomePage> {
                               Row(
                                 children: [
                                   Text(
-                                    'Data: ${controller.selectedDate.value?.toLocal().toString().split(' ')[0]}',
+                                    '${context.localizations.taskData}: ${controller.selectedDate.value?.toLocal().toString().split(' ')[0]}',
                                   ),
                                   IconButton(
                                       onPressed: () async {
@@ -319,7 +204,7 @@ class _HomePageState extends State<HomePage> {
                               Row(
                                 children: [
                                   Text(
-                                    'Hora: ${controller.selectedTime.value?.format(context)}',
+                                    '${context.localizations.taskTime}: ${controller.selectedTime.value?.format(context)}',
                                   ),
                                   IconButton(
                                     icon: const Icon(Icons.access_time),
@@ -380,8 +265,8 @@ class _HomePageState extends State<HomePage> {
                           ? const CircularProgressIndicator(
                               color: Colors.white,
                             )
-                          : const Text('Criar tarefa',
-                              style: TextStyle(
+                          : Text(context.localizations.addTask,
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold));
                     }),
@@ -391,5 +276,157 @@ class _HomePageState extends State<HomePage> {
             ),
           );
         });
+  }
+}
+
+class ListViewAndCalendar extends StatelessWidget {
+  const ListViewAndCalendar({
+    super.key,
+    required this.controller,
+  });
+
+  final HomeController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30),
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GetBuilder<HomeController>(builder: (controller) {
+              Map<DateTime, int> completedTasks =
+                  controller.getCompletedTasksByDate(controller.todos);
+              return Visibility(
+                visible: controller.isCalendarShown.value,
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  color: Colors.white,
+                  child: Column(
+                    children: [
+                      HeatMapCalendar(
+                        datasets: completedTasks,
+                        colorMode: ColorMode.color,
+                        defaultColor: Colors.grey[300]!,
+                        textColor: Colors.black,
+                        colorsets: UtilsColors.heatMapColorSets,
+                        monthFontSize: 14,
+                        weekFontSize: 14,
+                        showColorTip: false,
+                        onClick: (date) {
+                          controller.filterTodosByDate(date);
+                        },
+                      ),
+                      TextButton(
+                        onPressed: () => controller.clearFilter(),
+                        child: Text(
+                          context.localizations.calendar,
+                          style: const TextStyle(
+                            color: Colors.red,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }),
+            Obx(
+              () => controller.isLoading.value
+                  ? Center(
+                      child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        children: [
+                          const CircularProgressIndicator(),
+                          Text(
+                            context.localizations.loadingData,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ))
+                  : GetBuilder<HomeController>(builder: (controller) {
+                      return controller.todos.isEmpty
+                          ? Center(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      context.localizations.noTasks,
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                    Lottie.asset(
+                                      height: 200,
+                                      'assets/lottie/empty_list.json',
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          : Expanded(
+                              child: ShaderMask(
+                                shaderCallback: (Rect bounds) {
+                                  return const LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [
+                                      Colors.transparent,
+                                      Colors.white,
+                                    ],
+                                    stops: [.0, .1],
+                                  ).createShader(bounds);
+                                },
+                                blendMode: BlendMode.dstIn,
+                                child: Scrollbar(
+                                  child: ListView.builder(
+                                    physics: const BouncingScrollPhysics(),
+                                    padding: const EdgeInsets.only(
+                                        top: 30,
+                                        bottom: kBottomNavigationBarHeight),
+                                    shrinkWrap: true,
+                                    itemCount:
+                                        controller.filteredTodos.isNotEmpty
+                                            ? controller.filteredTodos.length
+                                            : controller.todos.length,
+                                    itemBuilder: (context, index) {
+                                      final todo =
+                                          controller.filteredTodos.isNotEmpty
+                                              ? controller.filteredTodos[index]
+                                              : controller.todos[index];
+
+                                      return ListItem(
+                                        todo: todo,
+                                        controller: controller,
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                            );
+                    }),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

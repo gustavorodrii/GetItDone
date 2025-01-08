@@ -10,7 +10,7 @@ class SplashBinding implements Bindings {
     await Future.delayed(const Duration(seconds: 2));
 
     if (userId != null) {
-      Future.delayed(Duration.zero, () => Get.offNamed('/home'));
+      Future.delayed(Duration.zero, () => Get.offNamed('/mainNavigation'));
     } else {
       Future.delayed(Duration.zero, () => Get.offNamed('/login'));
     }

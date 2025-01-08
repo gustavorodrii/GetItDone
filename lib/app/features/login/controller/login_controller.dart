@@ -25,7 +25,7 @@ class LoginController extends GetxController {
       (sucess) {
         Get.snackbar('Parabéns', 'Aproveite o app',
             colorText: Colors.white, backgroundColor: Colors.green);
-        Get.offAllNamed('/home');
+        Get.offAllNamed('/mainNavigation');
       },
       (error) {
         Get.snackbar('Houve um erro', 'Credenciais inválidas',

@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
+import 'package:getitdone/app/features/navigation/main_navigation.dart';
 import 'package:getitdone/app/routes/routes.dart';
 import '../bindings/home_bindings.dart';
-import '../features/home/page/home_page.dart';
 import '../bindings/login_binding.dart';
 import '../features/login/page/login_page.dart';
 import '../bindings/register_binding.dart';
@@ -19,8 +19,8 @@ class RoutesPages {
     ),
     GetPage(name: Routes.welcome, page: () => WelcomePage()),
     GetPage(
-      name: Routes.home,
-      page: () => const HomePage(),
+      name: Routes.mainNavigation,
+      page: () => const MainNavigation(),
       binding: HomeBindings(),
     ),
     GetPage(
