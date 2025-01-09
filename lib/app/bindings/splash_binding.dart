@@ -7,7 +7,7 @@ class SplashBinding implements Bindings {
     final prefs = await SharedPreferences.getInstance();
     final userId = prefs.getString('userID');
 
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 3));
 
     if (userId != null) {
       Future.delayed(Duration.zero, () => Get.offNamed('/mainNavigation'));

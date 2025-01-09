@@ -69,6 +69,14 @@
   "loadingDataMessage": "We are loading your data, please wait a moment!",
   "deleteAllTasksButton": "Delete all tasks",
   "home": "Home",
-  "done": "Done"
+  "done": "Done",
+ "welcomeMessage": "Welcome to",
+  "inputEmailLogin": "Enter your email",
+  "inputNameLogin": "Enter your name",
+  "inputPasswordLogin": "Enter your password",
+  "registerButton": "Register",
+  "loginButton": "Sign in",
+  "alreadyHaveAccess": "Sign in",
+  "register": "Register"
 }
 

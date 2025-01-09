@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getitdone/app/features/register/controller/register_controller.dart';
+import 'package:getitdone/extensions/context_extension.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../shared/components/input_textfield.dart';
 
@@ -23,6 +25,7 @@ class _RegisterPageState extends State<RegisterPage> {
           spacing: 10,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Lottie.asset('assets/lottie/register.json'),
             const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -32,36 +35,50 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             InputTextfield(
               controller: controller.nameController,
-              labelText: 'Insira o seu nome',
+              labelText: context.localizations.inputNameLogin,
               icon: Icons.lock,
             ),
             InputTextfield(
               controller: controller.emailController,
-              labelText: 'Insira o seu e-mail',
+              labelText: context.localizations.inputEmailLogin,
               icon: Icons.email,
             ),
             InputTextfield(
               controller: controller.passwordController,
-              labelText: 'Insira a sua senha',
+              labelText: context.localizations.inputPasswordLogin,
               icon: Icons.lock,
             ),
+            const SizedBox(height: 10),
             Row(
               spacing: 25,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
                   child: ElevatedButton(
-                      onPressed: () => Get.offAllNamed('/login'),
-                      child: const Text('Já tenho acesso')),
+                    style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.black,
+                        backgroundColor: Colors.white,
+                        side: const BorderSide(
+                          color: Colors.blue,
+                          width: 1,
+                        )),
+                    onPressed: () => Get.offAllNamed('/login'),
+                    child: Text(context.localizations.alreadyHaveAccess),
+                  ),
                 ),
                 Expanded(
                     child: ElevatedButton(
-                        onPressed: () => controller.register(
-                              name: controller.nameController.text,
-                              email: controller.emailController.text,
-                              password: controller.passwordController.text,
-                            ),
-                        child: const Text('Cadastrar'))),
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.blue,
+                  ),
+                  onPressed: () => controller.register(
+                    name: controller.nameController.text,
+                    email: controller.emailController.text,
+                    password: controller.passwordController.text,
+                  ),
+                  child: Text(context.localizations.register),
+                )),
               ],
             ),
           ],

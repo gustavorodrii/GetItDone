@@ -68,5 +68,13 @@
   "loadingDataMessage": "Estamos carregando seus dados, aguarde um instante por favor!",
   "deleteAllTasksButton": "Deletar todas as tarefas",
   "home": "Tarefas",
-  "done": "Concluídas"
+  "done": "Concluídas",
+  "welcomeMessage": "Seja bem-vindo ao",
+  "inputEmailLogin": "Insira o seu e-mail",
+  "inputNameLogin": "Insira o seu nome",
+  "inputPasswordLogin": "Insira a sua senha",
+  "registerButton": "Registrar",
+  "loginButton": "Entrar",
+  "alreadyHaveAccess": "Já tenho acesso",
+  "register": "Cadastrar"
 }
