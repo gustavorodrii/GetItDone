@@ -8,11 +8,11 @@ import 'package:lottie/lottie.dart';
 import '../../../models/todo_model.dart';
 import '../../../service/notification_service.dart';
 import '../../../shared/components/input_textfield.dart';
+
 import '../../../utils/utils_colors.dart';
 
 class HomePage extends StatefulWidget {
-  final Locale selectedLocal;
-  const HomePage({super.key, required this.selectedLocal});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -20,7 +20,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final HomeController controller = Get.find<HomeController>();
-  //  GeneralStream.setLanguage(Locale('pt', 'BR'));
   @override
   Widget build(BuildContext context) {
     return Scaffold(

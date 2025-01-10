@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:getitdone/app/features/profile/page/profile.dart';
 import 'package:getitdone/extensions/context_extension.dart';
 import '../done/done_page.dart';
 import '../home/page/home_page.dart';
@@ -14,10 +15,9 @@ class _MainNavigationState extends State<MainNavigation> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
-    const HomePage(
-      selectedLocal: Locale('en'),
-    ),
+    const HomePage(),
     const DonePage(),
+    const Profile()
   ];
 
   void _onItemTapped(int index) {
@@ -35,7 +35,11 @@ class _MainNavigationState extends State<MainNavigation> {
         elevation: 1,
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        selectedItemColor: _selectedIndex == 0 ? Colors.blue : Colors.green,
+        selectedItemColor: _selectedIndex == 0
+            ? Colors.blue
+            : _selectedIndex == 2
+                ? Colors.black
+                : Colors.green,
         selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
         items: [
           BottomNavigationBarItem(
@@ -45,6 +49,10 @@ class _MainNavigationState extends State<MainNavigation> {
           BottomNavigationBarItem(
             icon: const Icon(Icons.done),
             label: context.localizations.done,
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.person),
+            label: context.localizations.config,
           ),
         ],
       ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:getitdone/app/features/home/controller/home_controller.dart';
 import 'package:getitdone/app/models/todo_model.dart';
+import 'package:getitdone/extensions/context_extension.dart';
 import 'package:intl/intl.dart';
 
 class ListItem extends StatefulWidget {
@@ -34,7 +35,7 @@ class _ListItemState extends State<ListItem> {
       child: Container(
         padding: const EdgeInsets.all(1),
         decoration: BoxDecoration(
-          color: Colors.grey[200],
+          color: Colors.grey[300],
           borderRadius: BorderRadius.circular(20),
         ),
         child: Slidable(
@@ -49,7 +50,7 @@ class _ListItemState extends State<ListItem> {
                 backgroundColor: Colors.red,
                 foregroundColor: Colors.white,
                 icon: Icons.delete,
-                label: 'Delete',
+                label: context.localizations.delete,
               ),
               SlidableAction(
                 onPressed: checkItem,
@@ -57,7 +58,9 @@ class _ListItemState extends State<ListItem> {
                 backgroundColor: Colors.green,
                 foregroundColor: Colors.white,
                 icon: Icons.check,
-                label: widget.todo.completed ? 'Desfazer' : 'Feito',
+                label: widget.todo.completed
+                    ? context.localizations.uncheck
+                    : context.localizations.check,
               ),
             ],
           ),

@@ -21,6 +21,7 @@ class RegisterDatasource {
       final data = UserModel.fromJson(response.data);
       userProvider.setUserName(data.name);
       userProvider.setUserID(data.id);
+      userProvider.setUserEmail(data.email);
       return Result.success(data);
     } catch (e) {
       return Result.failure(e.toString());

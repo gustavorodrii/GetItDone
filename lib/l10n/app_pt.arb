@@ -69,6 +69,7 @@
   "deleteAllTasksButton": "Deletar todas as tarefas",
   "home": "Tarefas",
   "done": "Concluídas",
+  "config": "Perfil",
   "welcomeMessage": "Seja bem-vindo ao",
   "inputEmailLogin": "Insira o seu e-mail",
   "inputNameLogin": "Insira o seu nome",
@@ -84,5 +85,12 @@
   "error": "Erro",
   "errorMessage": "Tente novamente",
   "oldestList": "Mais antigas",
-  "newestList": "Mais recentes"
+  "newestList": "Mais recentes",
+  "consecutiveDays":  "Você está há {days} dias criando tarefas. Estamos orgulhosos!",
+  "consecutiveDay":  "Você está há {days} dia criando tarefas. Estamos orgulhosos!",
+  "todoLengthMessage":  "Tarefas pendentes",
+  "completedLengthMessage": "Tarefas concluídas",
+  "delete": "Excluir",
+  "check": "Feito",
+  "uncheck": "Desfazer"
 }

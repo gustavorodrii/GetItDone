@@ -14,11 +14,20 @@ class HomeDatasource {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
       final response = await dio.get('$endpoint/${prefs.getString("userID")}');
-      final data = response.data as List;
-      final todos = data.map((e) => TodoModel.fromJson(e)).toList();
+
+      final data = response.data;
+      final List<dynamic> tasksData = data['todos'];
+      final int consecutiveDays = data['consecutiveDays'];
+
+      final todos = tasksData.map((e) {
+        final todo = TodoModel.fromJson(e);
+        return todo.copyWith(consecutiveDays: consecutiveDays);
+      }).toList();
+
       final String jsonString =
           jsonEncode(todos.map((e) => e.toJson()).toList());
       await prefs.setString("todos", jsonString);
+
       return Result.success(todos);
     } catch (e) {
       return Result.failure(e.toString());

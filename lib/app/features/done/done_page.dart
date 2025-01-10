@@ -22,118 +22,122 @@ class _DonePageState extends State<DonePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.green,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height / 5.5,
-            color: Colors.green,
-            child: SafeArea(
-              bottom: false,
-              child: Obx(() {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          context.localizations
-                                              .completedTasksHeader(
-                                            controller.completedTodos.length,
-                                          ),
-                                          style: const TextStyle(
-                                            height: 0,
-                                            fontSize: 16,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                        Text(
-                                          context.localizations
-                                              .taskCompletedText(controller
-                                                  .userProvider.userName.value),
-                                          style: const TextStyle(
-                                            height: 0,
-                                            fontSize: 18,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    controller.completedTodos.isEmpty
-                                        ? const SizedBox.shrink()
-                                        : Switch(
-                                            trackOutlineColor:
-                                                const WidgetStatePropertyAll<
-                                                    Color?>(
-                                              Colors.grey,
+      body: GetBuilder<HomeController>(builder: (controller) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height / 5.5,
+              color: Colors.green,
+              child: SafeArea(
+                bottom: false,
+                child: Obx(() {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            context.localizations
+                                                .completedTasksHeader(
+                                              controller.completedTodos.length,
                                             ),
-                                            inactiveThumbColor: Colors.grey,
-                                            trackColor:
-                                                const WidgetStatePropertyAll<
-                                                    Color?>(
-                                              Colors.white,
+                                            style: const TextStyle(
+                                              height: 0,
+                                              fontSize: 16,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w500,
                                             ),
-                                            thumbColor:
-                                                const WidgetStatePropertyAll<
-                                                    Color?>(
-                                              Colors.green,
+                                          ),
+                                          Text(
+                                            context.localizations
+                                                .taskCompletedText(controller
+                                                    .userProvider
+                                                    .userName
+                                                    .value),
+                                            style: const TextStyle(
+                                              height: 0,
+                                              fontSize: 18,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
                                             ),
-                                            thumbIcon:
-                                                const WidgetStatePropertyAll<
-                                                    Icon?>(
-                                              Icon(
-                                                Icons.calendar_month,
+                                          ),
+                                        ],
+                                      ),
+                                      controller.completedTodos.isEmpty
+                                          ? const SizedBox.shrink()
+                                          : Switch(
+                                              trackOutlineColor:
+                                                  const WidgetStatePropertyAll<
+                                                      Color?>(
+                                                Colors.grey,
                                               ),
+                                              inactiveThumbColor: Colors.grey,
+                                              trackColor:
+                                                  const WidgetStatePropertyAll<
+                                                      Color?>(
+                                                Colors.white,
+                                              ),
+                                              thumbColor:
+                                                  const WidgetStatePropertyAll<
+                                                      Color?>(
+                                                Colors.green,
+                                              ),
+                                              thumbIcon:
+                                                  const WidgetStatePropertyAll<
+                                                      Icon?>(
+                                                Icon(
+                                                  Icons.calendar_month,
+                                                ),
+                                              ),
+                                              value: controller
+                                                  .isCalendarShown.value,
+                                              onChanged: (value) => controller
+                                                  .toggleCalendarShown(),
                                             ),
-                                            value: controller
-                                                .isCalendarShown.value,
-                                            onChanged: (value) => controller
-                                                .toggleCalendarShown(),
-                                          ),
-                                  ],
-                                ),
-                                const SizedBox(height: 10),
-                                Text(
-                                  context.localizations.calendarPrompt,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w400,
+                                    ],
                                   ),
-                                ),
-                              ],
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    context.localizations.calendarPrompt,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                );
-              }),
+                    ],
+                  );
+                }),
+              ),
             ),
-          ),
-          ListViewAndCalendar(controller: controller),
-        ],
-      ),
+            ListViewAndCalendar(controller: controller),
+          ],
+        );
+      }),
       floatingActionButton: controller.completedTodos.isEmpty
           ? null
           : FloatingActionButton.extended(

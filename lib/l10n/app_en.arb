@@ -70,6 +70,7 @@
   "deleteAllTasksButton": "Delete all tasks",
   "home": "Home",
   "done": "Done",
+  "config": "Profile",
  "welcomeMessage": "Welcome to",
   "inputEmailLogin": "Enter your email",
   "inputNameLogin": "Enter your name",
@@ -85,6 +86,13 @@
   "error": "Error",
   "errorMessage": "Try again",
   "oldestList": "Oldest first",
-  "newestList": "Newest first"
+  "newestList": "Newest first",
+  "consecutiveDays": "You’ve been creating tasks for {days} days. We’re proud!",
+  "consecutiveDay": "You’ve been creating tasks for {days} day. We’re proud!",
+  "todoLengthMessage": "Tasks pending",
+  "completedLengthMessage": "Tasks completed",
+  "delete": "Delete",
+  "check": "Done",
+  "uncheck": "Undo"
 }
 

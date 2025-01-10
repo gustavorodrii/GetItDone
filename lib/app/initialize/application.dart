@@ -17,7 +17,11 @@ class Application extends StatefulWidget {
 class _ApplicationState extends State<Application> {
   @override
   void initState() {
-    GeneralStream.languageStream.add(const Locale('en'));
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      GeneralStream.loadSavedLanguage();
+    });
+
+    // GeneralStream.languageStream.add(const Locale('en'));
     super.initState();
   }
 
