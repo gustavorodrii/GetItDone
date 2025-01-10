@@ -26,26 +26,37 @@ class _RegisterPageState extends State<RegisterPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Lottie.asset('assets/lottie/register.json'),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Seja bem-vindo ao Get It Done',
-                    style: TextStyle(fontSize: 20)),
+                Expanded(
+                  child: Text(
+                    context.localizations.registerMessage,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey,
+                    ),
+                    textAlign: TextAlign.start,
+                  ),
+                ),
               ],
             ),
             InputTextfield(
               controller: controller.nameController,
               labelText: context.localizations.inputNameLogin,
+              initialObscureText: false,
               icon: Icons.lock,
             ),
             InputTextfield(
               controller: controller.emailController,
               labelText: context.localizations.inputEmailLogin,
               icon: Icons.email,
+              initialObscureText: false,
             ),
             InputTextfield(
               controller: controller.passwordController,
               labelText: context.localizations.inputPasswordLogin,
+              initialObscureText: true,
               icon: Icons.lock,
             ),
             const SizedBox(height: 10),
@@ -76,6 +87,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     name: controller.nameController.text,
                     email: controller.emailController.text,
                     password: controller.passwordController.text,
+                    context: context,
                   ),
                   child: Text(context.localizations.register),
                 )),

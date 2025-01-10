@@ -77,6 +77,14 @@
   "registerButton": "Register",
   "loginButton": "Sign in",
   "alreadyHaveAccess": "Sign in",
-  "register": "Register"
+  "register": "Register",
+  "registerMessage": "Keep your day on track by quickly noting down your tasks!",
+  "success": "Success",
+  "registerSuccess": "User registered successfully",
+  "loginSuccess": "Enjoy the app",
+  "error": "Error",
+  "errorMessage": "Try again",
+  "oldestList": "Oldest first",
+  "newestList": "Newest first"
 }
 

@@ -25,111 +25,113 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blue,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height / 4,
-            color: Colors.blue,
-            child: SafeArea(
-              bottom: false,
-              child: Obx(() {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+      body: GetBuilder<HomeController>(builder: (controller) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height / 4,
+              color: Colors.blue,
+              child: SafeArea(
+                bottom: false,
+                child: Obx(() {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  context.localizations.greeting,
+                                  style: const TextStyle(
+                                    height: 0,
+                                    fontSize: 20,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  '${controller.userProvider.userName.value}.',
+                                  style: const TextStyle(
+                                    height: 0,
+                                    fontSize: 26,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            controller.todos.isEmpty
+                                ? const SizedBox.shrink()
+                                : Switch(
+                                    trackOutlineColor:
+                                        const WidgetStatePropertyAll<Color?>(
+                                      Colors.grey,
+                                    ),
+                                    inactiveThumbColor: Colors.grey,
+                                    trackColor:
+                                        const WidgetStatePropertyAll<Color?>(
+                                      Colors.white,
+                                    ),
+                                    thumbColor:
+                                        const WidgetStatePropertyAll<Color?>(
+                                      Colors.blue,
+                                    ),
+                                    thumbIcon:
+                                        const WidgetStatePropertyAll<Icon?>(
+                                      Icon(
+                                        Icons.calendar_month,
+                                      ),
+                                    ),
+                                    value: controller.isCalendarShown.value,
+                                    onChanged: (value) =>
+                                        controller.toggleCalendarShown(),
+                                  ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                context.localizations.greeting,
+                                context.localizations.newTask,
                                 style: const TextStyle(
-                                  height: 0,
-                                  fontSize: 20,
                                   color: Colors.white,
-                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
                                 ),
                               ),
-                              Text(
-                                '${controller.userProvider.userName.value}.',
-                                style: const TextStyle(
-                                  height: 0,
-                                  fontSize: 26,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
+                              CircleAvatar(
+                                backgroundColor: Colors.white,
+                                child: IconButton(
+                                  onPressed: () => createNewTask(context),
+                                  icon: const Icon(Icons.add),
                                 ),
                               ),
                             ],
                           ),
-                          controller.todos.isEmpty
-                              ? const SizedBox.shrink()
-                              : Switch(
-                                  trackOutlineColor:
-                                      const WidgetStatePropertyAll<Color?>(
-                                    Colors.grey,
-                                  ),
-                                  inactiveThumbColor: Colors.grey,
-                                  trackColor:
-                                      const WidgetStatePropertyAll<Color?>(
-                                    Colors.white,
-                                  ),
-                                  thumbColor:
-                                      const WidgetStatePropertyAll<Color?>(
-                                    Colors.blue,
-                                  ),
-                                  thumbIcon:
-                                      const WidgetStatePropertyAll<Icon?>(
-                                    Icon(
-                                      Icons.calendar_month,
-                                    ),
-                                  ),
-                                  value: controller.isCalendarShown.value,
-                                  onChanged: (value) =>
-                                      controller.toggleCalendarShown(),
-                                ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        padding: const EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              context.localizations.newTask,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
-                            ),
-                            CircleAvatar(
-                              backgroundColor: Colors.white,
-                              child: IconButton(
-                                onPressed: () => createNewTask(context),
-                                icon: const Icon(Icons.add),
-                              ),
-                            ),
-                          ],
                         ),
                       ),
-                    ),
-                  ],
-                );
-              }),
+                    ],
+                  );
+                }),
+              ),
             ),
-          ),
-          ListViewAndCalendar(controller: controller),
-        ],
-      ),
+            ListViewAndCalendar(controller: controller),
+          ],
+        );
+      }),
     );
   }
 
@@ -155,11 +157,13 @@ class _HomePageState extends State<HomePage> {
                     labelText: context.localizations.taskTitle,
                     controller: controller.taskNameController,
                     icon: Icons.task,
+                    initialObscureText: false,
                   ),
                   InputTextfield(
                     labelText: context.localizations.taskDescription,
                     controller: controller.taskDescriptionController,
                     icon: Icons.description,
+                    initialObscureText: false,
                   ),
                   Row(
                     children: [
@@ -279,7 +283,7 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class ListViewAndCalendar extends StatelessWidget {
+class ListViewAndCalendar extends StatefulWidget {
   const ListViewAndCalendar({
     super.key,
     required this.controller,
@@ -287,6 +291,11 @@ class ListViewAndCalendar extends StatelessWidget {
 
   final HomeController controller;
 
+  @override
+  State<ListViewAndCalendar> createState() => _ListViewAndCalendarState();
+}
+
+class _ListViewAndCalendarState extends State<ListViewAndCalendar> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -304,7 +313,7 @@ class ListViewAndCalendar extends StatelessWidget {
           children: [
             GetBuilder<HomeController>(builder: (controller) {
               Map<DateTime, int> completedTasks =
-                  controller.getCompletedTasksByDate(controller.todos);
+                  controller.getCreatedTasksByDate(controller.todos);
               return Visibility(
                 visible: controller.isCalendarShown.value,
                 child: Container(
@@ -339,8 +348,38 @@ class ListViewAndCalendar extends StatelessWidget {
                 ),
               );
             }),
+            const SizedBox(height: 20),
+            widget.controller.todos.isEmpty
+                ? const SizedBox.shrink()
+                : Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: InkWell(
+                      onTap: () {
+                        widget.controller.toggleFilterByDate();
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          const Icon(
+                            Icons.swap_calls,
+                            size: 30,
+                            color: Colors.blue,
+                          ),
+                          Text(
+                            widget.controller.filterByDate.value
+                                ? context.localizations.oldestList
+                                : context.localizations.newestList,
+                            style: const TextStyle(
+                              color: Colors.blue,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
             Obx(
-              () => controller.isLoading.value
+              () => widget.controller.isLoading.value
                   ? Center(
                       child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -400,7 +439,7 @@ class ListViewAndCalendar extends StatelessWidget {
                                   child: ListView.builder(
                                     physics: const BouncingScrollPhysics(),
                                     padding: const EdgeInsets.only(
-                                        top: 30,
+                                        top: 20,
                                         bottom: kBottomNavigationBarHeight),
                                     shrinkWrap: true,
                                     itemCount:

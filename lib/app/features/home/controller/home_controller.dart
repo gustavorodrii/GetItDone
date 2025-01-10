@@ -19,6 +19,7 @@ class HomeController extends GetxController {
   var selectedTime = Rx<TimeOfDay?>(null);
   Rx<bool> reminderSelected = false.obs;
   Rx<bool> isCalendarShown = false.obs;
+  Rx<bool> filterByDate = false.obs;
 
   void clearControllers() {
     taskNameController.clear();
@@ -42,15 +43,19 @@ class HomeController extends GetxController {
 
   void fetchTodos() async {
     isLoading.value = true;
+
     final result = await repository.fetchTodos();
 
     result.fold(
       (sucess) {
-        todos.clear();
-        todos.addAll(sucess);
+        todos.sort((a, b) => a.createdAt!.compareTo(b.createdAt!));
+
+        todos.addAll(sucess.where((todo) => !todo.completed));
+
+        completedTodos
+            .sort((a, b) => a.completedDate!.compareTo(b.completedDate!));
+
         completedTodos.addAll(sucess.where((e) => e.completed == true));
-        todos.sort(
-            (a, b) => a.completed == b.completed ? 0 : (a.completed ? 1 : -1));
 
         isLoading.value = false;
         update();
@@ -74,7 +79,7 @@ class HomeController extends GetxController {
         update();
       },
       (error) {
-        Get.snackbar('Erro', 'Não foi possível criar a tarefa',
+        Get.snackbar('Error', 'Unable to create task',
             colorText: Get.theme.snackBarTheme.actionTextColor,
             backgroundColor: Get.theme.snackBarTheme.backgroundColor);
       },
@@ -87,16 +92,34 @@ class HomeController extends GetxController {
     result.fold(
       (sucess) {
         final index = todos.indexWhere((element) => element.id == sucess.id);
-        todos[index] = sucess;
-        completedTodos.clear();
-        completedTodos.addAll(todos.where((todo) => todo.completed));
-        Get.snackbar('Sucesso', 'Você marcou como feita a tarefa',
-            colorText: Colors.white, backgroundColor: Colors.green);
-        getCompletedTasksByDate(todos);
+        final indexCompleted =
+            completedTodos.indexWhere((element) => element.id == sucess.id);
+
+        if (sucess.completed) {
+          if (index != -1) {
+            todos.removeAt(index);
+          }
+          completedTodos.add(sucess);
+        } else {
+          if (indexCompleted != -1) {
+            completedTodos.removeAt(indexCompleted);
+          }
+          todos.add(sucess);
+        }
+
+        Get.snackbar(
+          'Success',
+          sucess.completed
+              ? 'You marked the task as done'
+              : 'You marked the task as undone',
+          colorText: Colors.white,
+          backgroundColor: Colors.green,
+        );
+
         update();
       },
       (error) {
-        Get.snackbar('Erro', 'Não foi possível atualizar a tarefa',
+        Get.snackbar('Error', 'Unable to update task',
             colorText: Get.theme.snackBarTheme.actionTextColor,
             backgroundColor: Get.theme.snackBarTheme.backgroundColor);
       },
@@ -106,7 +129,7 @@ class HomeController extends GetxController {
   void deleteTodo(String id) async {
     final result = await repository.delete(id);
     if (!result) {
-      Get.snackbar('Erro', 'Não foi possível deletar a tarefa',
+      Get.snackbar('Error', 'Unable to delete task',
           colorText: Get.theme.snackBarTheme.actionTextColor,
           backgroundColor: Get.theme.snackBarTheme.backgroundColor);
     }
@@ -116,7 +139,7 @@ class HomeController extends GetxController {
       (todoCompleted) => todoCompleted.id == id,
     );
     update();
-    Get.snackbar('Sucesso', 'Você excluiu a tarefa',
+    Get.snackbar('Success', 'You have deleted the task',
         colorText: Colors.white, backgroundColor: Colors.green);
   }
 
@@ -140,6 +163,28 @@ class HomeController extends GetxController {
     }
 
     return completedTasks;
+  }
+
+  Map<DateTime, int> getCreatedTasksByDate(List<TodoModel> todos) {
+    Map<DateTime, int> createdTasks = {};
+
+    for (var todo in todos) {
+      if (todo.createdAt != null) {
+        DateTime date = DateTime(
+          todo.createdAt!.year,
+          todo.createdAt!.month,
+          todo.createdAt!.day,
+        );
+
+        if (createdTasks.containsKey(date)) {
+          createdTasks[date] = createdTasks[date]! + 1;
+        } else {
+          createdTasks[date] = 1;
+        }
+      }
+    }
+
+    return createdTasks;
   }
 
   void filterTodosByDate(DateTime date) {
@@ -172,7 +217,7 @@ class HomeController extends GetxController {
     for (var todo in todosToDelete) {
       final result = await repository.delete(todo.id!);
       if (!result) {
-        Get.snackbar('Erro', 'Não foi possível deletar a tarefa',
+        Get.snackbar('Error', 'Unable to delete task',
             colorText: Get.theme.snackBarTheme.actionTextColor,
             backgroundColor: Get.theme.snackBarTheme.backgroundColor);
       } else {
@@ -186,7 +231,17 @@ class HomeController extends GetxController {
     isLoading.value = false;
     update();
 
-    Get.snackbar('Sucesso', 'Você excluiu as tarefas concluídas',
+    Get.snackbar('Success', 'You have deleted completed tasks',
         colorText: Colors.white, backgroundColor: Colors.green);
+  }
+
+  void toggleFilterByDate() {
+    filterByDate.value = !filterByDate.value;
+
+    todos.sort((a, b) => filterByDate.value
+        ? b.createdAt!.compareTo(a.createdAt!)
+        : a.createdAt!.compareTo(b.createdAt!));
+
+    update();
   }
 }

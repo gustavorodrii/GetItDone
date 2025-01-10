@@ -31,6 +31,8 @@ class _MainNavigationState extends State<MainNavigation> {
     return Scaffold(
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        elevation: 1,
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         selectedItemColor: _selectedIndex == 0 ? Colors.blue : Colors.green,

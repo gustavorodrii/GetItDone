@@ -76,5 +76,13 @@
   "registerButton": "Registrar",
   "loginButton": "Entrar",
   "alreadyHaveAccess": "Já tenho acesso",
-  "register": "Cadastrar"
+  "register": "Cadastrar",
+  "registerMessage": "Organize seu dia com facilidade, anotando suas tarefas e mantendo tudo sob controle!",
+  "success": "Sucesso",
+  "registerSuccess": "Usuário registrado com sucesso",
+  "loginSuccess": "Aproveite o app",
+  "error": "Erro",
+  "errorMessage": "Tente novamente",
+  "oldestList": "Mais antigas",
+  "newestList": "Mais recentes"
 }

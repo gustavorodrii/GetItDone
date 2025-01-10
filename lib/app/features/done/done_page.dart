@@ -174,7 +174,7 @@ class ListViewAndCalendar extends StatelessWidget {
           children: [
             GetBuilder<HomeController>(builder: (controller) {
               Map<DateTime, int> completedTasks =
-                  controller.getCompletedTasksByDate(controller.todos);
+                  controller.getCompletedTasksByDate(controller.completedTodos);
               return Visibility(
                 visible: controller.isCalendarShown.value,
                 child: Container(
