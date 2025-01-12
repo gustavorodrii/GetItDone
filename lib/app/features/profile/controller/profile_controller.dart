@@ -49,7 +49,7 @@ class ProfileController extends GetxController {
         update();
       },
       (error) {
-        print(error);
+        fetchTopConsecutive();
       },
     );
   }

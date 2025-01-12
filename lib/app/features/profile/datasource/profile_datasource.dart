@@ -3,7 +3,7 @@ import '../../../service/dio_service.dart';
 import '../../../service/result.dart';
 
 class ProfileDatasource {
-  String endpoint = "/top-consecutive";
+  String endpoint = "/todo";
 
   Future<Result<List<TopConsecutive>>> fetchTopConsecutive() async {
     final dio = DioService().dio;
@@ -12,7 +12,7 @@ class ProfileDatasource {
 
       final data = response.data as List;
       final topConsecutive =
-          data.map((e) => TopConsecutive.fromJson((e))).toList();
+          data.map((e) => TopConsecutive.fromJson((e))).take(10).toList();
 
       return Result.success(topConsecutive);
     } catch (e) {

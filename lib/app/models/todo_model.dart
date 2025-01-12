@@ -32,7 +32,7 @@ class TodoModel {
           : DateTime.now(),
       completedDate: json['completedDate'] != null
           ? DateTime.parse(json['completedDate'])
-          : DateTime.now(),
+          : DateTime.timestamp(),
       consecutiveDays: json['consecutiveDays'] ?? 0,
     );
   }
