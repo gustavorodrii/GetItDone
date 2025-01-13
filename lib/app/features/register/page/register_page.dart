@@ -69,52 +69,48 @@ class _RegisterPageState extends State<RegisterPage> {
                       icon: Icons.lock,
                     ),
                     const SizedBox(height: 10),
-                    Row(
-                      spacing: 25,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                foregroundColor: Colors.black,
-                                backgroundColor: Colors.white,
-                                side: const BorderSide(
-                                  color: Colors.blue,
-                                  width: 1,
-                                )),
-                            onPressed: () => Get.offAllNamed('/login'),
+                    controller.isLoading.value
+                        ? Center(
                             child:
-                                Text(context.localizations.alreadyHaveAccess),
+                                CircularProgressIndicator(color: Colors.blue),
+                          )
+                        : Row(
+                            spacing: 25,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      foregroundColor: Colors.black,
+                                      backgroundColor: Colors.white,
+                                      side: const BorderSide(
+                                        color: Colors.blue,
+                                        width: 1,
+                                      )),
+                                  onPressed: () => Get.offAllNamed('/login'),
+                                  child: Text(
+                                      context.localizations.alreadyHaveAccess),
+                                ),
+                              ),
+                              Expanded(
+                                  child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  foregroundColor: Colors.white,
+                                  backgroundColor: Colors.blue,
+                                ),
+                                onPressed: () => controller.register(
+                                  name: controller.nameController.text,
+                                  email: controller.emailController.text,
+                                  password: controller.passwordController.text,
+                                  context: context,
+                                ),
+                                child: Text(context.localizations.register),
+                              )),
+                            ],
                           ),
-                        ),
-                        Expanded(
-                            child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.white,
-                            backgroundColor: Colors.blue,
-                          ),
-                          onPressed: () => controller.register(
-                            name: controller.nameController.text,
-                            email: controller.emailController.text,
-                            password: controller.passwordController.text,
-                            context: context,
-                          ),
-                          child: Text(context.localizations.register),
-                        )),
-                      ],
-                    ),
                   ],
                 ),
               ),
-              controller.isLoading.value
-                  ? Container(
-                      // ignore: deprecated_member_use
-                      color: Colors.black.withOpacity(0.5),
-                      child: const Center(
-                        child: CircularProgressIndicator(color: Colors.blue),
-                      ),
-                    )
-                  : const SizedBox.shrink(),
               Positioned(
                 top: kToolbarHeight * 1.5,
                 right: 30,

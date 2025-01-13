@@ -67,54 +67,52 @@ class _LoginPageState extends State<LoginPage> {
                       initialObscureText: true,
                     ),
                     const SizedBox(height: 10),
-                    Row(
-                      spacing: 25,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  foregroundColor: Colors.black,
-                                  backgroundColor: Colors.white,
-                                  side: const BorderSide(
-                                    color: Colors.blue,
-                                    width: 1,
-                                  )),
-                              onPressed: () => Get.offAllNamed('/register'),
-                              child: Text(
-                                context.localizations.registerButton,
-                              )),
-                        ),
-                        Expanded(
-                          child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                foregroundColor: Colors.white,
-                                backgroundColor: Colors.blue,
+                    controller.isLoading.value
+                        ? Center(
+                            child:
+                                CircularProgressIndicator(color: Colors.blue),
+                          )
+                        : Row(
+                            spacing: 25,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        foregroundColor: Colors.black,
+                                        backgroundColor: Colors.white,
+                                        side: const BorderSide(
+                                          color: Colors.blue,
+                                          width: 1,
+                                        )),
+                                    onPressed: () =>
+                                        Get.offAllNamed('/register'),
+                                    child: Text(
+                                      context.localizations.registerButton,
+                                    )),
                               ),
-                              onPressed: () => controller.login(
-                                    email: controller.emailController.text,
-                                    password:
-                                        controller.passwordController.text,
-                                    context: context,
-                                  ),
-                              child: Text(
-                                context.localizations.loginButton,
-                              )),
-                        ),
-                      ],
-                    ),
+                              Expanded(
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      foregroundColor: Colors.white,
+                                      backgroundColor: Colors.blue,
+                                    ),
+                                    onPressed: () => controller.login(
+                                          email:
+                                              controller.emailController.text,
+                                          password: controller
+                                              .passwordController.text,
+                                          context: context,
+                                        ),
+                                    child: Text(
+                                      context.localizations.loginButton,
+                                    )),
+                              ),
+                            ],
+                          ),
                   ],
                 ),
               ),
-              controller.isLoading.value
-                  ? Container(
-                      // ignore: deprecated_member_use
-                      color: Colors.black.withOpacity(0.5),
-                      child: const Center(
-                        child: CircularProgressIndicator(color: Colors.blue),
-                      ),
-                    )
-                  : const SizedBox.shrink(),
               Positioned(
                 top: kToolbarHeight * 1.5,
                 right: 30,

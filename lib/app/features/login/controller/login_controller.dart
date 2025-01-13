@@ -43,7 +43,8 @@ class LoginController extends GetxController {
     required BuildContext context,
   }) async {
     if (email.isEmpty || password.isEmpty) {
-      Get.snackbar('Erro', 'Preencha todos os campos',
+      Get.snackbar(
+          context.localizations.error, context.localizations.emptyRegisterField,
           colorText: Colors.white, backgroundColor: Colors.red);
       return;
     }
@@ -61,8 +62,7 @@ class LoginController extends GetxController {
         isLoading.value = false;
       },
       (error) {
-        Get.snackbar(
-            context.localizations.error, context.localizations.errorMessage,
+        Get.snackbar(context.localizations.error, error,
             colorText: Colors.white, backgroundColor: Colors.red);
         isLoading.value = false;
       },
