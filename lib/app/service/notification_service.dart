@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 // ignore: depend_on_referenced_packages
@@ -31,6 +32,18 @@ class NotificationService {
         log("Notificação clicada: ${details.payload}");
       },
     );
+
+    if (Platform.isAndroid) {
+      await _notificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>()
+          ?.requestNotificationsPermission();
+    } else {
+      await _notificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              IOSFlutterLocalNotificationsPlugin>()
+          ?.requestPermissions();
+    }
   }
 
   static Future<void> scheduleNotification({
@@ -56,7 +69,7 @@ class NotificationService {
           sound: 'default',
         ),
       ),
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      androidScheduleMode: AndroidScheduleMode.alarmClock,
       matchDateTimeComponents: DateTimeComponents.dateAndTime,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,

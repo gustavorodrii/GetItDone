@@ -24,8 +24,8 @@ class _LoginPageState extends State<LoginPage> {
           child: Stack(
             children: [
               Padding(
-                padding: EdgeInsets.fromLTRB(
-                    30, 40, 30, MediaQuery.of(context).viewInsets.bottom),
+                padding: const EdgeInsets.fromLTRB(
+                    30, 40, 30, kBottomNavigationBarHeight),
                 child: Column(
                   spacing: 25,
                   mainAxisAlignment: MainAxisAlignment.center,

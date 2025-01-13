@@ -44,7 +44,23 @@ class RegisterController extends GetxController {
     required BuildContext context,
   }) async {
     if (email.isEmpty || password.isEmpty || name.isEmpty) {
-      Get.snackbar('Erro', 'Preencha todos os campos',
+      Get.snackbar(
+          context.localizations.error, context.localizations.emptyRegisterField,
+          colorText: Colors.white, backgroundColor: Colors.red);
+      return;
+    }
+
+    RegExp emailRegex = RegExp(r'^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$');
+    if (!emailRegex.hasMatch(email)) {
+      Get.snackbar(
+          context.localizations.error, context.localizations.invalidEmail,
+          colorText: Colors.white, backgroundColor: Colors.red);
+      return;
+    }
+
+    if (password.length < 6) {
+      Get.snackbar(
+          context.localizations.error, context.localizations.password6Digits,
           colorText: Colors.white, backgroundColor: Colors.red);
       return;
     }

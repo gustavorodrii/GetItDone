@@ -30,18 +30,19 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: MediaQuery.of(context).size.height / 5,
+              // height: MediaQuery.of(context).size.height / 5,
               color: Colors.blue,
               child: SafeArea(
                 bottom: false,
                 child: Obx(() {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 20),
-                        child: Row(
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 20),
+                    child: Column(
+                      spacing: 20,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Column(
@@ -91,10 +92,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                           ],
                         ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
@@ -113,8 +111,8 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ],
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   );
                 }),
               ),
@@ -231,6 +229,16 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     onPressed: () async {
+                      if (controller.taskNameController.text.trim().isEmpty) {
+                        Get.snackbar(
+                          context.localizations.error,
+                          context.localizations.taskTitleRequired,
+                          colorText: Colors.white,
+                          backgroundColor: Colors.red,
+                        );
+                        return;
+                      }
+
                       DateTime? reminderDate = controller.reminderSelected.value
                           ? DateTime(
                               controller.selectedDate.value!.year,
@@ -250,7 +258,7 @@ class _HomePageState extends State<HomePage> {
                       if (reminderDate != null) {
                         await NotificationService.scheduleNotification(
                           id: DateTime.now().millisecondsSinceEpoch ~/ 1000,
-                          title: 'Lembrete da Tarefa',
+                          title: context.localizations.taskReminder,
                           body: newTodo.title,
                           scheduledDate: reminderDate,
                         );
@@ -343,7 +351,7 @@ class _ListViewAndCalendarState extends State<ListViewAndCalendar> {
               );
             }),
             const SizedBox(height: 20),
-            widget.controller.todos.isEmpty
+            widget.controller.todos.isEmpty || widget.controller.isLoading.value
                 ? const SizedBox.shrink()
                 : Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),

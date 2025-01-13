@@ -28,17 +28,18 @@ class _ProfileState extends State<Profile> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                height: MediaQuery.of(context).size.height / 4,
                 color: Colors.black,
                 child: SafeArea(
                   bottom: false,
                   child: Obx(() {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Row(
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 20),
+                      child: Column(
+                        spacing: 20,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Column(
@@ -114,88 +115,78 @@ class _ProfileState extends State<Profile> {
                               )
                             ],
                           ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            padding: const EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Row(
-                              spacing: 10,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    padding: const EdgeInsets.all(8),
-                                    decoration: BoxDecoration(
-                                      color: Colors.blue,
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          context
-                                              .localizations.todoLengthMessage,
-                                          textAlign: TextAlign.center,
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.white,
-                                          ),
+                          Row(
+                            spacing: 5,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  padding: const EdgeInsets.all(4),
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        context.localizations.todoLengthMessage,
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                          overflow: TextOverflow.ellipsis,
+                                          fontSize: 16,
+                                          color: Colors.white,
                                         ),
-                                        Text(
-                                          controller.todos.length.toString(),
-                                          style: const TextStyle(
-                                            fontSize: 22,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                      ),
+                                      Text(
+                                        controller.todos.length.toString(),
+                                        style: const TextStyle(
+                                          fontSize: 22,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                Expanded(
-                                  child: Container(
-                                    padding: const EdgeInsets.all(8),
-                                    decoration: BoxDecoration(
-                                      color: Colors.green,
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          context.localizations
-                                              .completedLengthMessage,
-                                          textAlign: TextAlign.center,
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.white,
-                                          ),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  padding: const EdgeInsets.all(4),
+                                  decoration: BoxDecoration(
+                                    color: Colors.green,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        context.localizations
+                                            .completedLengthMessage,
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                          overflow: TextOverflow.ellipsis,
+                                          fontSize: 16,
+                                          color: Colors.white,
                                         ),
-                                        Text(
-                                          controller.completedTodos.length
-                                              .toString(),
-                                          style: const TextStyle(
-                                            fontSize: 22,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                      ),
+                                      Text(
+                                        controller.completedTodos.length
+                                            .toString(),
+                                        style: const TextStyle(
+                                          fontSize: 22,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     );
                   }),
                 ),

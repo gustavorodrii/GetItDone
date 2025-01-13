@@ -25,11 +25,11 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Stack(
             children: [
               Padding(
-                padding: EdgeInsets.fromLTRB(
+                padding: const EdgeInsets.fromLTRB(
                     30,
                     kBottomNavigationBarHeight * 1.6,
                     30,
-                    MediaQuery.of(context).viewInsets.bottom),
+                    kBottomNavigationBarHeight),
                 child: Column(
                   spacing: 10,
                   mainAxisAlignment: MainAxisAlignment.center,

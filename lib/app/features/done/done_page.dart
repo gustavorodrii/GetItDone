@@ -27,18 +27,18 @@ class _DonePageState extends State<DonePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: MediaQuery.of(context).size.height / 6,
               color: Colors.green,
               child: SafeArea(
                 bottom: false,
                 child: Obx(() {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 20),
-                        child: Row(
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 20),
+                    child: Column(
+                      spacing: 20,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Expanded(
@@ -125,8 +125,8 @@ class _DonePageState extends State<DonePage> {
                             ),
                           ],
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   );
                 }),
               ),
@@ -273,7 +273,7 @@ class ListViewAndCalendar extends StatelessWidget {
                                     physics: const BouncingScrollPhysics(),
                                     padding: const EdgeInsets.only(
                                         top: 30,
-                                        bottom: kBottomNavigationBarHeight),
+                                        bottom: kBottomNavigationBarHeight * 2),
                                     shrinkWrap: true,
                                     itemCount: controller.completedTodos.length,
                                     itemBuilder: (context, index) {

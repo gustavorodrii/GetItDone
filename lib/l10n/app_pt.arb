@@ -107,5 +107,10 @@
   "welcomePageMessageProfileTitle": "TOP 10",
   "welcomePageMessageProfileDescription": "Descubra os usuários mais engajados em dias consecutivos.",
   "goToApp": "Me leve para o app",
-  "welcomeToApp": "Seja bem-vindo à família, {userName}"
+  "welcomeToApp": "Seja bem-vindo à família, {userName}",
+  "taskReminder": "Lembrete: Não esqueça sua tarefa!",
+  "taskTitleRequired": "Nome da tarefa é obrigatório",
+  "emptyRegisterField": "Preencha todos os campos",
+  "password6Digits": "A senha precisa ter pelo menos 6 dígitos",
+  "invalidEmail": "Por favor, insira um endereço de e-mail válido"
 }

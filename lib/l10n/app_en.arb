@@ -108,6 +108,11 @@
   "welcomePageMessageProfileTitle": "TOP 10",
   "welcomePageMessageProfileDescription": "See who the most engaged users are on consecutive days.",
   "goToApp": "Take me to the app",
-  "welcomeToApp": "Welcome to the family, {userName}"
+  "welcomeToApp": "Welcome to the family, {userName}",
+  "taskReminder": "Reminder: Don't forget your task!",
+  "taskTitleRequired": "Task name is required",
+  "emptyRegisterField": "Please fill in all fields",
+  "password6Digits": "Password must be at least 6 characters",
+  "invalidEmail": "Please enter a valid email address"
 }
 
