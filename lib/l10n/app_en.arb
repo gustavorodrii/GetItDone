@@ -93,6 +93,21 @@
   "completedLengthMessage": "Tasks completed",
   "delete": "Delete",
   "check": "Done",
-  "uncheck": "Undo"
+  "uncheck": "Undo",
+  "consecutiveDaysList": "Here are the top 10 users of the app based on consecutive days active",
+  "signOut": "Sign Out",
+  "welcomePageMessage1": "Never let your tasks get delayed or forget about them again",
+  "welcomePageMessage2": "With the super app Get It Done, you'll be notified whenever a new task is created",
+  "welcomePageMessage3": "Our mission is to simplify your life with small daily steps. Keep track of your tasks and boost your productivity",
+  "welcomePageMessageCreateTitle": "Create your tasks",
+  "welcomePageMessageCreateDescription": "Create your tasks simply and practically, without complications",
+  "welcomePageMessageHomeTitle": "Track your progress",
+  "welcomePageMessageHomeDescription": "See all your tasks organized.",
+  "welcomePageMessageDoneTitle": "Completed tasks",
+  "welcomePageMessageDoneDescription": "Mark your tasks as completed and see your progress in real-time",
+  "welcomePageMessageProfileTitle": "TOP 10",
+  "welcomePageMessageProfileDescription": "See who the most engaged users are on consecutive days.",
+  "goToApp": "Take me to the app",
+  "welcomeToApp": "Welcome to the family, {userName}"
 }
 

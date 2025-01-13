@@ -7,7 +7,7 @@ class ProfileRepository {
 
   ProfileRepository({required this.datasource});
 
-  Future<Result<List<TopConsecutive>>> fetchTopConsecutive() async {
+  Future<Result<TopConsecutive>> fetchTopConsecutive() async {
     return await datasource.fetchTopConsecutive();
   }
 }

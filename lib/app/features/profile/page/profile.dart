@@ -45,7 +45,11 @@ class _ProfileState extends State<Profile> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    controller.userProvider.userName.value,
+                                    controller.userProvider.userName.value
+                                        .split(' ')
+                                        .first,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
                                     style: const TextStyle(
                                       height: 0,
                                       fontSize: 14,
@@ -54,7 +58,9 @@ class _ProfileState extends State<Profile> {
                                     ),
                                   ),
                                   Text(
-                                    controller.userProvider.userEmail.value,
+                                    profileController.topConsecutive.value
+                                            ?.actualUser?.email ??
+                                        "",
                                     style: const TextStyle(
                                       height: 0,
                                       fontSize: 14,
@@ -196,8 +202,7 @@ class _ProfileState extends State<Profile> {
               ),
               Expanded(
                 child: Container(
-                  padding: const EdgeInsets.fromLTRB(
-                      20, 10, 20, kBottomNavigationBarHeight),
+                  padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
@@ -205,89 +210,138 @@ class _ProfileState extends State<Profile> {
                       topRight: Radius.circular(30),
                     ),
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Lottie.asset('assets/lottie/fire.json', height: 100),
-                      controller.todos[0].consecutiveDays == 0
-                          ? const SizedBox.shrink()
-                          : Text(
-                              textAlign: TextAlign.center,
-                              controller.todos[0].consecutiveDays == 1
-                                  ? context.localizations.consecutiveDay(
-                                      controller.todos[0].consecutiveDays
-                                          .toString())
-                                  : context.localizations.consecutiveDays(
-                                      controller.todos[0].consecutiveDays
-                                          .toString()),
-                              style: const TextStyle(
-                                color: Colors.grey,
-                                fontSize: 26,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                      Expanded(
-                        child: profileController.isLoading.value
-                            ? const Center(
-                                child: CircularProgressIndicator(
-                                    color: Colors.black))
-                            : profileController.topConsecutive.isEmpty
-                                ? Lottie.asset(
-                                    'assets/lottie/empty_consecutivelist.json',
-                                    height: 30)
-                                : ShaderMask(
-                                    shaderCallback: (Rect bounds) {
-                                      return const LinearGradient(
-                                        begin: Alignment.topCenter,
-                                        end: Alignment.bottomCenter,
-                                        colors: [
-                                          Colors.transparent,
-                                          Colors.white,
-                                        ],
-                                        stops: [.0, .1],
-                                      ).createShader(bounds);
-                                    },
-                                    child: ListView.builder(
-                                      shrinkWrap: true,
-                                      itemCount: profileController
-                                          .topConsecutive.length,
-                                      itemBuilder: (context, index) {
-                                        var consecutiveProfile =
-                                            profileController
-                                                .topConsecutive[index];
-                                        return ListTile(
-                                          trailing: index == 0 ||
-                                                  index == 1 ||
-                                                  index == 2
-                                              ? Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  children: [
-                                                    Text(
-                                                      consecutiveProfile
-                                                          .consecutiveDays
-                                                          .toString(),
-                                                      style: TextStyle(
-                                                          fontSize: 20,
-                                                          color: Colors.black),
-                                                    ),
-                                                    Lottie.asset(
-                                                        'assets/lottie/fire.json',
-                                                        height: 30),
-                                                  ],
-                                                )
-                                              : const Icon(Icons.military_tech),
-                                          title: Text(
-                                              '${index + 1}º ${consecutiveProfile.name}'),
-                                          subtitle:
-                                              Text(consecutiveProfile.email!),
-                                        );
-                                      },
+                  child: profileController.isLoading.value
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.black,
+                          ),
+                        )
+                      : SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Lottie.asset('assets/lottie/fire.json',
+                                  height: 100),
+                              profileController.topConsecutive.value?.actualUser
+                                          ?.consecutiveDays ==
+                                      0
+                                  ? const SizedBox.shrink()
+                                  : Text(
+                                      textAlign: TextAlign.center,
+                                      profileController
+                                                  .topConsecutive
+                                                  .value
+                                                  ?.actualUser
+                                                  ?.consecutiveDays ==
+                                              1
+                                          ? context.localizations
+                                              .consecutiveDay(profileController
+                                                  .topConsecutive
+                                                  .value!
+                                                  .actualUser!
+                                                  .consecutiveDays
+                                                  .toString())
+                                          : context.localizations
+                                              .consecutiveDays(profileController
+                                                  .topConsecutive
+                                                  .value!
+                                                  .actualUser!
+                                                  .consecutiveDays
+                                                  .toString()),
+                                      style: const TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 26,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
+                              const SizedBox(height: 20),
+                              Text(
+                                context.localizations.consecutiveDaysList,
+                                style: const TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              profileController
+                                      .topConsecutive.value!.allUsers!.isEmpty
+                                  ? Lottie.asset(
+                                      'assets/lottie/empty_consecutivelist.json',
+                                      height: 30)
+                                  : Scrollbar(
+                                      child: ListView.builder(
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        padding: const EdgeInsets.fromLTRB(
+                                            10, 10, 10, 0),
+                                        shrinkWrap: true,
+                                        itemCount: profileController
+                                            .topConsecutive
+                                            .value!
+                                            .allUsers!
+                                            .length,
+                                        itemBuilder: (context, index) {
+                                          var consecutiveProfile =
+                                              profileController.topConsecutive
+                                                  .value!.allUsers![index];
+                                          var top3 = index == 0 ||
+                                              index == 1 ||
+                                              index == 2;
+                                          return ListTile(
+                                            contentPadding: EdgeInsets.zero,
+                                            trailing: top3
+                                                ? Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      Text(
+                                                        consecutiveProfile
+                                                            .consecutiveDays
+                                                            .toString(),
+                                                        style: const TextStyle(
+                                                            fontSize: 20,
+                                                            color:
+                                                                Colors.black),
+                                                      ),
+                                                      Lottie.asset(
+                                                          'assets/lottie/fire.json',
+                                                          height: 30),
+                                                    ],
+                                                  )
+                                                : const Icon(
+                                                    Icons.military_tech),
+                                            title: Text(
+                                              '${index + 1}º ${consecutiveProfile.name}',
+                                              style: TextStyle(
+                                                  fontWeight: top3
+                                                      ? FontWeight.bold
+                                                      : FontWeight.normal),
+                                            ),
+                                            subtitle:
+                                                Text(consecutiveProfile.email!),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                              const SizedBox(height: 30),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: const Size(200, 40),
+                                  foregroundColor: Colors.white,
+                                  backgroundColor: Colors.black,
+                                ),
+                                onPressed: profileController.signOut,
+                                child: Text(
+                                  context.localizations.signOut,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
                                   ),
-                      ),
-                    ],
-                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 30),
+                            ],
+                          ),
+                        ),
                 ),
               ),
             ],

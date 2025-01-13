@@ -5,6 +5,7 @@ import 'package:getitdone/app/features/home/controller/home_controller.dart';
 import 'package:getitdone/app/features/home/page/list_item.dart';
 import 'package:getitdone/extensions/context_extension.dart';
 import 'package:lottie/lottie.dart';
+
 import '../../../models/todo_model.dart';
 import '../../../service/notification_service.dart';
 import '../../../shared/components/input_textfield.dart';
@@ -29,7 +30,7 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: MediaQuery.of(context).size.height / 4,
+              height: MediaQuery.of(context).size.height / 5,
               color: Colors.blue,
               child: SafeArea(
                 bottom: false,
@@ -38,7 +39,8 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -55,7 +57,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                                 Text(
-                                  '${controller.userProvider.userName.value}.',
+                                  '${controller.userProvider.userName.value.split(' ').first}.',
                                   style: const TextStyle(
                                     height: 0,
                                     fontSize: 26,
@@ -73,18 +75,14 @@ class _HomePageState extends State<HomePage> {
                                       Colors.grey,
                                     ),
                                     inactiveThumbColor: Colors.grey,
-                                    trackColor:
-                                        const WidgetStatePropertyAll<Color?>(
-                                      Colors.white,
-                                    ),
-                                    thumbColor:
-                                        const WidgetStatePropertyAll<Color?>(
-                                      Colors.blue,
-                                    ),
+                                    inactiveTrackColor: Colors.white,
+                                    activeColor: Colors.blue,
+                                    activeTrackColor: Colors.white,
                                     thumbIcon:
                                         const WidgetStatePropertyAll<Icon?>(
                                       Icon(
                                         Icons.calendar_month,
+                                        color: Colors.white,
                                       ),
                                     ),
                                     value: controller.isCalendarShown.value,
@@ -94,32 +92,26 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                       ),
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                context.localizations.newTask,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              context.localizations.newTask,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
                               ),
-                              CircleAvatar(
-                                backgroundColor: Colors.white,
-                                child: IconButton(
-                                  onPressed: () => createNewTask(context),
-                                  icon: const Icon(Icons.add),
-                                ),
+                            ),
+                            CircleAvatar(
+                              backgroundColor: Colors.white,
+                              child: IconButton(
+                                onPressed: () => createNewTask(),
+                                icon: const Icon(Icons.add),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -134,23 +126,23 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Future<dynamic> createNewTask(BuildContext context) {
+  Future<dynamic> createNewTask() {
     DateTime initialDate = DateTime.now().add(const Duration(days: 1));
     TimeOfDay initialTime = const TimeOfDay(hour: 9, minute: 0);
     controller.selectedDate.value = initialDate;
     controller.selectedTime.value = initialTime;
     controller.reminderSelected.value = false;
     return showModalBottomSheet(
-        backgroundColor: Colors.white,
-        showDragHandle: true,
+        isScrollControlled: true,
         context: context,
-        builder: (_) {
+        builder: (context) {
           return SafeArea(
             child: Container(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20)
+                  .copyWith(bottom: MediaQuery.of(context).viewInsets.bottom),
               child: Column(
-                spacing: 10,
                 mainAxisSize: MainAxisSize.min,
+                spacing: 10,
                 children: [
                   InputTextfield(
                     labelText: context.localizations.taskTitle,
@@ -168,6 +160,7 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Obx(() {
                         return Checkbox(
+                          activeColor: Colors.blue,
                           value: controller.reminderSelected.value,
                           onChanged: (value) {
                             controller.reminderSelected.value = value!;
@@ -315,36 +308,38 @@ class _ListViewAndCalendarState extends State<ListViewAndCalendar> {
                   controller.getCreatedTasksByDate(controller.todos);
               return Visibility(
                 visible: controller.isCalendarShown.value,
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  color: Colors.white,
-                  child: Column(
-                    children: [
-                      HeatMapCalendar(
-                        datasets: completedTasks,
-                        colorMode: ColorMode.color,
-                        defaultColor: Colors.grey[300]!,
-                        textColor: Colors.black,
-                        colorsets: UtilsColors.heatMapColorSets,
-                        monthFontSize: 14,
-                        weekFontSize: 14,
-                        showColorTip: false,
-                        onClick: (date) {
-                          controller.filterTodosByDate(date);
-                        },
-                      ),
-                      TextButton(
-                        onPressed: () => controller.clearFilter(),
-                        child: Text(
-                          context.localizations.calendar,
-                          style: const TextStyle(
-                            color: Colors.red,
-                          ),
+                child: controller.todos.isEmpty
+                    ? const SizedBox.shrink()
+                    : Container(
+                        padding: const EdgeInsets.all(8),
+                        color: Colors.white,
+                        child: Column(
+                          children: [
+                            HeatMapCalendar(
+                              datasets: completedTasks,
+                              colorMode: ColorMode.color,
+                              defaultColor: Colors.grey[300]!,
+                              textColor: Colors.black,
+                              colorsets: UtilsColors.heatMapColorSets,
+                              monthFontSize: 14,
+                              weekFontSize: 14,
+                              showColorTip: false,
+                              onClick: (date) {
+                                controller.filterTodosByDate(date);
+                              },
+                            ),
+                            TextButton(
+                              onPressed: () => controller.clearFilter(),
+                              child: Text(
+                                context.localizations.calendar,
+                                style: const TextStyle(
+                                  color: Colors.red,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
               );
             }),
             const SizedBox(height: 20),

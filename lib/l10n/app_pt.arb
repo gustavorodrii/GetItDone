@@ -92,5 +92,20 @@
   "completedLengthMessage": "Tarefas concluídas",
   "delete": "Excluir",
   "check": "Feito",
-  "uncheck": "Desfazer"
+  "uncheck": "Desfazer",
+  "consecutiveDaysList": "Aqui estão os 10 principais usuários do app com base nos dias consecutivos ativos",
+  "signOut": "Sair da Conta",
+  "welcomePageMessage1": "Nunca mais deixe suas tarefas atrasadas ou esqueça delas!",
+  "welcomePageMessage2": "Com o super app Get It Done, você será notificado sempre que uma nova tarefa for criada.",
+  "welcomePageMessage3": "Nossa missão é simplificar sua vida com pequenos passos diários. Acompanhe suas tarefas e melhore sua produtividade!",
+  "welcomePageMessageCreateTitle": "Crie suas tarefas",
+  "welcomePageMessageCreateDescription": "Crie suas tarefas de forma simples e prática, sem complicações.",
+  "welcomePageMessageHomeTitle": "Acompanhe seu progresso",
+  "welcomePageMessageHomeDescription": "Veja todas as suas tarefas organizadas.",
+  "welcomePageMessageDoneTitle": "Tarefas concluídas",
+  "welcomePageMessageDoneDescription": "Marque suas tarefas como concluídas e veja seu progresso em tempo real.",
+  "welcomePageMessageProfileTitle": "TOP 10",
+  "welcomePageMessageProfileDescription": "Descubra os usuários mais engajados em dias consecutivos.",
+  "goToApp": "Me leve para o app",
+  "welcomeToApp": "Seja bem-vindo à família, {userName}"
 }

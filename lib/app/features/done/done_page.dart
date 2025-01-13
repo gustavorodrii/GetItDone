@@ -27,7 +27,7 @@ class _DonePageState extends State<DonePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: MediaQuery.of(context).size.height / 5.5,
+              height: MediaQuery.of(context).size.height / 6,
               color: Colors.green,
               child: SafeArea(
                 bottom: false,
@@ -36,7 +36,8 @@ class _DonePageState extends State<DonePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -66,10 +67,12 @@ class _DonePageState extends State<DonePage> {
                                           ),
                                           Text(
                                             context.localizations
-                                                .taskCompletedText(controller
-                                                    .userProvider
-                                                    .userName
-                                                    .value),
+                                                .taskCompletedText(
+                                              controller
+                                                  .userProvider.userName.value
+                                                  .split(' ')
+                                                  .first,
+                                            ),
                                             style: const TextStyle(
                                               height: 0,
                                               fontSize: 18,
@@ -88,31 +91,25 @@ class _DonePageState extends State<DonePage> {
                                                 Colors.grey,
                                               ),
                                               inactiveThumbColor: Colors.grey,
-                                              trackColor:
-                                                  const WidgetStatePropertyAll<
-                                                      Color?>(
-                                                Colors.white,
-                                              ),
-                                              thumbColor:
-                                                  const WidgetStatePropertyAll<
-                                                      Color?>(
-                                                Colors.green,
-                                              ),
+                                              inactiveTrackColor: Colors.white,
+                                              activeColor: Colors.green,
+                                              activeTrackColor: Colors.white,
                                               thumbIcon:
                                                   const WidgetStatePropertyAll<
                                                       Icon?>(
                                                 Icon(
                                                   Icons.calendar_month,
+                                                  color: Colors.white,
                                                 ),
                                               ),
                                               value: controller
                                                   .isCalendarShown.value,
                                               onChanged: (value) => controller
                                                   .toggleCalendarShown(),
-                                            ),
+                                            )
                                     ],
                                   ),
-                                  const SizedBox(height: 10),
+                                  const SizedBox(height: 20),
                                   Text(
                                     context.localizations.calendarPrompt,
                                     overflow: TextOverflow.ellipsis,

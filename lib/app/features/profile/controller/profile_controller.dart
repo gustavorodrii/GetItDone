@@ -10,7 +10,7 @@ class ProfileController extends GetxController {
   final ProfileRepository repository;
   var selectedLanguage = 'en'.obs;
   final isLoading = false.obs;
-  final List<TopConsecutive> topConsecutive = [];
+  final Rxn<TopConsecutive> topConsecutive = Rxn<TopConsecutive>();
 
   ProfileController({required this.repository});
 
@@ -44,7 +44,7 @@ class ProfileController extends GetxController {
 
     result.fold(
       (sucess) {
-        topConsecutive.addAll(sucess);
+        topConsecutive.value = sucess;
         isLoading.value = false;
         update();
       },
@@ -52,5 +52,11 @@ class ProfileController extends GetxController {
         fetchTopConsecutive();
       },
     );
+  }
+
+  void signOut() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('userID');
+    Get.offAllNamed('/login');
   }
 }

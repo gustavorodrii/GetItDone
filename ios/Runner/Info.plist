@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>GetItDone</string>
+	<string>Get It Done</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -51,8 +51,8 @@
     	<string>remote-notification</string>
 	</array>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-		<string>Este aplicativo usa notificações para alertas importantes.</string>
+	<string>This app uses notifications for important alerts.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-		<string>Este aplicativo precisa de acesso à localização.</string>
+	<string>This app requires access to your location.</string>
 	</dict>
 </plist>
