@@ -387,7 +387,9 @@ class _ListViewAndCalendarState extends State<ListViewAndCalendar> {
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Column(
                         children: [
-                          const CircularProgressIndicator(),
+                          const CircularProgressIndicator(
+                            color: Colors.blue,
+                          ),
                           Text(
                             context.localizations.loadingData,
                             textAlign: TextAlign.center,
