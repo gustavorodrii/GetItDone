@@ -308,8 +308,6 @@ class _ProfileState extends State<Profile> {
                                                       ? FontWeight.bold
                                                       : FontWeight.normal),
                                             ),
-                                            subtitle:
-                                                Text(consecutiveProfile.email!),
                                           );
                                         },
                                       ),

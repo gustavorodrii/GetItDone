@@ -62,8 +62,9 @@ class NotificationService {
           'task_channel',
           'Task Notifications',
           channelDescription: 'Notificações de Tarefas',
-          importance: Importance.high,
-          priority: Priority.high,
+          importance: Importance.max,
+          priority: Priority.max,
+          channelShowBadge: true,
         ),
         iOS: DarwinNotificationDetails(
           sound: 'default',
