@@ -62,7 +62,8 @@ class LoginController extends GetxController {
         isLoading.value = false;
       },
       (error) {
-        Get.snackbar(context.localizations.error, error,
+        Get.snackbar(
+            context.localizations.error, context.localizations.errorMessage,
             colorText: Colors.white, backgroundColor: Colors.red);
         isLoading.value = false;
       },
