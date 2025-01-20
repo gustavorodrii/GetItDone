@@ -22,38 +22,6 @@ void initializeApplication() async {
       options.profilesSampleRate = 1.0;
     },
     appRunner: () async {
-      ErrorWidget.builder = (FlutterErrorDetails details) {
-        // Log do erro (opcional)
-        // Retorna um widget genérico centralizado em vez de quebrar o app
-        return Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(Icons.error, color: Colors.white, size: 64),
-                SizedBox(height: 8),
-                Text(
-                  'Ocorreu um erro inesperado.',
-                  style: TextStyle(color: Colors.white, fontSize: 18),
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  'Por favor, tente novamente mais tarde ou entre em contato com o suporte.',
-                  style: TextStyle(color: Colors.black, fontSize: 14),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 8),
-                Text(
-                  details.toStringShort(),
-                  style: TextStyle(color: Colors.black, fontSize: 14),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          ),
-        );
-      };
       await NotificationService.initialize();
       tz.initializeTimeZones();
       await dotenv.load(fileName: '.env');
